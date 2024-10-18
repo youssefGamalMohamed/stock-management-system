@@ -23,12 +23,12 @@ public class StockExchangeController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<StockExchange> getAllExchanges() {
+    public List<StockExchangeDto> getAllExchanges() {
         log.info("Fetching all stock exchanges");
         List<StockExchange> exchanges = exchangeService.getAllExchanges();
         List<StockExchangeDto> exchangeDtos = stockExchangeMapper.toDtos(exchanges);
         log.info("Retrieved stock exchanges: " + exchangeDtos);
-        return exchanges;
+        return exchangeDtos;
     }
 
     @PostMapping

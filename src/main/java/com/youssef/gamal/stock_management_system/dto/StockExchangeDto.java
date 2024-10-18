@@ -19,6 +19,6 @@ public class StockExchangeDto {
     private String name;
     private String description;
     private Boolean liveInMarket;
-    private Set<Stock> stocks;
+    private Set<StockDto> stocks;
 
 }

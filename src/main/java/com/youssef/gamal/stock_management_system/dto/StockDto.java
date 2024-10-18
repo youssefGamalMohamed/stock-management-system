@@ -23,6 +23,6 @@ public class StockDto {
     private String description;
     private BigDecimal currentPrice;
     private Timestamp lastUpdate;
-    private Set<StockExchange> exchanges;
+    private Set<StockExchangeDto> exchanges;
 
 }
