@@ -4,6 +4,7 @@ import com.youssef.gamal.stock_management_system.entity.Stock;
 import com.youssef.gamal.stock_management_system.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class StockController {
     private StockService stockService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Stock> getAllStocks() {
         log.info("Fetching all stocks");
         List<Stock> stocks = stockService.getAllStocks();
@@ -28,6 +30,7 @@ public class StockController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Stock createStock(@RequestBody Stock stock) {
         log.info("Creating stock: {}", stock);
         Stock createdStock = stockService.createStock(stock);
@@ -36,6 +39,7 @@ public class StockController {
     }
 
     @PutMapping("/{id}/price")
+    @ResponseStatus(HttpStatus.OK)
     public Stock updateStockPrice(@PathVariable Long id, @RequestParam BigDecimal newPrice) {
         log.info("Updating stock ID {} with new price: {}", id, newPrice);
         Stock updatedStock = stockService.updatePrice(id, newPrice);
@@ -44,6 +48,7 @@ public class StockController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteStock(@PathVariable Long id) {
         log.info("Deleting stock ID: {}", id);
         stockService.deleteStock(id);
