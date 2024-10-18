@@ -1,6 +1,8 @@
 package com.youssef.gamal.stock_management_system.controller;
 
+import com.youssef.gamal.stock_management_system.dto.StockExchangeDto;
 import com.youssef.gamal.stock_management_system.entity.StockExchange;
+import com.youssef.gamal.stock_management_system.mappers.StockExchangeMapper;
 import com.youssef.gamal.stock_management_system.service.StockExchangeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +18,27 @@ public class StockExchangeController {
     @Autowired
     private StockExchangeService exchangeService;
 
+    @Autowired
+    private StockExchangeMapper stockExchangeMapper;
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<StockExchange> getAllExchanges() {
         log.info("Fetching all stock exchanges");
         List<StockExchange> exchanges = exchangeService.getAllExchanges();
-        log.info("Retrieved {} stock exchanges", exchanges.size());
+        List<StockExchangeDto> exchangeDtos = stockExchangeMapper.toDtos(exchanges);
+        log.info("Retrieved stock exchanges: " + exchangeDtos);
         return exchanges;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StockExchange createExchange(@RequestBody StockExchange exchange) {
-        log.info("Creating stock exchange: {}", exchange);
-        StockExchange createdExchange = exchangeService.createStockExchange(exchange);
-        log.info("Created stock exchange with ID: {}", createdExchange.getId());
-        return createdExchange;
+    public StockExchangeDto createExchange(@RequestBody StockExchangeDto exchangeDto) {
+        log.info("Creating stock exchange: {}", exchangeDto);
+        StockExchange createdExchange = exchangeService.createStockExchange(stockExchangeMapper.toEntity(exchangeDto));
+        StockExchangeDto createdExchangeDto = stockExchangeMapper.toDto(createdExchange);
+        log.info("Created stock exchange with ID: {}", createdExchangeDto.getId());
+        return createdExchangeDto;
     }
 
     @PutMapping("/{exchangeId}/stocks/{stockId}")

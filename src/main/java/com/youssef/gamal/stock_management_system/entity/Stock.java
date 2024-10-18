@@ -1,6 +1,5 @@
 package com.youssef.gamal.stock_management_system.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,6 +13,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 public class Stock {
     @Id
@@ -26,6 +26,7 @@ public class Stock {
 
     @ManyToMany(mappedBy = "stocks")
     @JsonIgnore
+    @ToString.Exclude
     private Set<StockExchange> exchanges;
 
     // Getters, Setters, and other methods

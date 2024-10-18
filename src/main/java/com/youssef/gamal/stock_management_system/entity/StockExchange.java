@@ -1,6 +1,5 @@
 package com.youssef.gamal.stock_management_system.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class StockExchange {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

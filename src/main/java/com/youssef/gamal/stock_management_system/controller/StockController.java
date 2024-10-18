@@ -1,17 +1,16 @@
 package com.youssef.gamal.stock_management_system.controller;
 
+import com.youssef.gamal.stock_management_system.dto.StockDto;
 import com.youssef.gamal.stock_management_system.entity.Stock;
+import com.youssef.gamal.stock_management_system.mappers.StockMapper;
 import com.youssef.gamal.stock_management_system.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/stocks")
@@ -20,31 +19,37 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
+    @Autowired
+    private StockMapper stockMapper;
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Stock> getAllStocks() {
+    public List<StockDto> getAllStocks() {
         log.info("Fetching all stocks");
         List<Stock> stocks = stockService.getAllStocks();
-        log.info("Retrieved {} stocks", stocks.size());
-        return stocks;
+        List<StockDto> stockDtos = stockMapper.toDtos(stocks);
+        log.info("Retrieved stocks: " + stockDtos);
+        return stockDtos;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Stock createStock(@RequestBody Stock stock) {
-        log.info("Creating stock: {}", stock);
-        Stock createdStock = stockService.createStock(stock);
-        log.info("Created stock with ID: {}", createdStock.getId());
-        return createdStock;
+    public StockDto createStock(@RequestBody StockDto stockDto) {
+        log.info("Creating stock: {}", stockDto);
+        Stock createdStock = stockService.createStock(stockMapper.toEntity(stockDto));
+        StockDto createdStockDto = stockMapper.toDto(createdStock);
+        log.info("Created stock with ID: {}", createdStockDto.getId());
+        return createdStockDto;
     }
 
     @PutMapping("/{id}/price")
     @ResponseStatus(HttpStatus.OK)
-    public Stock updateStockPrice(@PathVariable Long id, @RequestParam BigDecimal newPrice) {
+    public StockDto updateStockPrice(@PathVariable Long id, @RequestParam BigDecimal newPrice) {
         log.info("Updating stock ID {} with new price: {}", id, newPrice);
         Stock updatedStock = stockService.updatePrice(id, newPrice);
-        log.info("Updated stock ID {}: new price is {}", id, updatedStock.getCurrentPrice());
-        return updatedStock;
+        StockDto updatedStockDto = stockMapper.toDto(updatedStock);
+        log.info("Updated stock ID {}: new price is {}", id, updatedStockDto.getCurrentPrice());
+        return updatedStockDto;
     }
 
     @DeleteMapping("/{id}")
