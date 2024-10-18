@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: stock-management-system
+  datasource:
+    url: jdbc:mysql://localhost:3306/stock_exchange_db  # MySQL database URL
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC driver
+    username: root  # MySQL username (change as per your setup)
+    password: 1234  # MySQL password (change as per your setup)
+  jpa:
+    hibernate:
+      ddl-auto: update  # Automatically update the schema, or set to 'none', 'validate', 'create', 'create-drop'
+    show-sql: true  # Display SQL statements in logs
+    database-platform: org.hibernate.dialect.MySQL8Dialect  # Dialect for MySQL 8 or newer
+
+
+
+server:
+  port: 8080  # The port for your Spring Boot application
+  servlet:
+    context-path: /api  # All your APIs will be prefixed with /api
+
+
+
+logging:
+  level:
+    root: INFO  # Log level for the application
+    org.hibernate.SQL: DEBUG  # Log SQL queries for debugging
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Expose all Actuator endpoints
