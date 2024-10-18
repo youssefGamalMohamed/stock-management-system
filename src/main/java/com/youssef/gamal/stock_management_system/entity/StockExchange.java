@@ -1,5 +1,6 @@
 package com.youssef.gamal.stock_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class StockExchange {
             joinColumns = @JoinColumn(name = "exchange_id"),
             inverseJoinColumns = @JoinColumn(name = "stock_id")
     )
+    @JsonManagedReference
     private Set<Stock> stocks;
 
     // Getters, Setters, and other methods

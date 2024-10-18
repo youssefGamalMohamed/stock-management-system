@@ -11,9 +11,11 @@ spring:
       ddl-auto: update  # Automatically update the schema, or set to 'none', 'validate', 'create', 'create-drop'
     show-sql: true  # Display SQL statements in logs
     database-platform: org.hibernate.dialect.MySQL8Dialect  # Dialect for MySQL 8 or newer
-
-
-
+  sql:
+    init:
+      schema-locations: classpath:schema.sql  # to create tables
+#      data-locations: classpath:data.sql      # to add data into tables
+      mode: always
 server:
   port: 8080  # The port for your Spring Boot application
   servlet:
