@@ -1,6 +1,7 @@
 package com.youssef.gamal.stock_management_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,7 @@ public class Stock {
     private Timestamp lastUpdate;
 
     @ManyToMany(mappedBy = "stocks")
-    @JsonBackReference
+    @JsonIgnore
     private Set<StockExchange> exchanges;
 
     // Getters, Setters, and other methods

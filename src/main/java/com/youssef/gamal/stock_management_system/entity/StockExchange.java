@@ -26,7 +26,6 @@ public class StockExchange {
             joinColumns = @JoinColumn(name = "exchange_id"),
             inverseJoinColumns = @JoinColumn(name = "stock_id")
     )
-    @JsonManagedReference
     private Set<Stock> stocks;
 
     // Getters, Setters, and other methods
