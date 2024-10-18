@@ -32,3 +32,8 @@ management:
     web:
       exposure:
         include: "*"  # Expose all Actuator endpoints
+
+# Swagger Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
